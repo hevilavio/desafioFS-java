@@ -1,5 +1,6 @@
 package br.com.fastsolutions.desafio.indicadores;
 
+
 /**
  * Interface a ser implementada por todas as
  * classes que desejam analisar se uma taxa é  
@@ -12,4 +13,4 @@ package br.com.fastsolutions.desafio.indicadores;
 public interface Comparador<A, N> {
 	public boolean relevante(A atual, N novo);
 	public A valorInicial();
-}
+} 

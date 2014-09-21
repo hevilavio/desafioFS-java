@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import br.com.fastsolutions.desafio.modelo.Movimentacao;
 
-public class AgrupadorPorFilialTest {
+public class AgrupadorPorChaveTest {
 	
 	private List<Movimentacao> movimentacoes;
 	private Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupador;
@@ -20,7 +20,14 @@ public class AgrupadorPorFilialTest {
 	
 	@Before
 	public void init(){
-		agrupador = new AgrupadorPorFilial();
+		ChaveAgrupamento<Movimentacao, String> chave = new ChaveAgrupamento<Movimentacao, String>() {
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getFilial();
+			}
+		};
+		
+		agrupador = new AgrupadorPorChave(chave);
 		movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
 	}
 	
@@ -30,21 +37,21 @@ public class AgrupadorPorFilialTest {
 		double[] valores = new double[]{ 10.0, 20.0, 30.0 };
 		
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiaisMesmoNome, valores);
-		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupar(movimentacoes);
+		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupa(movimentacoes);
 
 		assertEquals(filiaisMesmoNome.length, agrupamento.size());
 	}
 	
 	@Test
 	public void possoAgruparListaComFiliaisDeMesmoNome() {
-		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupar(this.movimentacoes);
+		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupa(this.movimentacoes);
 		assertEquals(3, agrupamento.size());
 	}
 	
 	@Test
 	public void tenhoTamanhoCorrespondenteEmSublista() { 
 		
-		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupar(this.movimentacoes);
+		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupa(this.movimentacoes);
 
 		assertEquals(2, agrupamento.get("SP").size());
 		assertEquals(2, agrupamento.get("RJ").size());
@@ -54,7 +61,7 @@ public class AgrupadorPorFilialTest {
 	@Test
 	public void tenhoValoresCorrespondentesEmSublista() {
 
-		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupar(this.movimentacoes);
+		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupa(this.movimentacoes);
 
 		assertEquals(10.0, agrupamento.get("SP").get(0).getValor(), 0.00001);
 		assertEquals(20.0, agrupamento.get("SP").get(1).getValor(), 0.00001);
@@ -72,7 +79,7 @@ public class AgrupadorPorFilialTest {
 		double[] valores = new double[]{ 10.0, 20.0, 30.0, 40.0, 50.0 };
 		
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
-		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupar(movimentacoes);
+		Map<String, List<Movimentacao>> agrupamento = agrupador.agrupa(movimentacoes);
 
 		assertEquals(2, agrupamento.get("SP").size());
 		assertEquals(10.0, agrupamento.get("SP").get(0).getValor(), 0.00001);

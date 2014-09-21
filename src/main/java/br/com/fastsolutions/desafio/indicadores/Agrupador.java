@@ -14,5 +14,15 @@ import java.util.Map;
  * 
  * */
 public interface Agrupador<T, R extends Map<?, ?>>{
-	public R agrupar(List<T> list);
+	public R agrupa(List<T> list);
+}
+
+
+/**
+ * Interface utilizada para reaproveitamento do 
+ * algoritmo de agrupamento cuja única diferença é
+ * o atributo utilizado.
+ * */
+interface ChaveAgrupamento <T, R>{
+	public R getChave(T item);
 }

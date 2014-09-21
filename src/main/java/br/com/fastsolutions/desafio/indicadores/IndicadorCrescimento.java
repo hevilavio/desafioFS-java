@@ -33,10 +33,9 @@ public class IndicadorCrescimento implements Indicador<Movimentacao, String>{
 	
 	@Override
 	public String calcula(List<Movimentacao> list) {
-		Map<String,List<Movimentacao>> agrupamento = agrupador.agrupar(list);
+		Map<String,List<Movimentacao>> agrupamento = agrupador.agrupa(list);
 
-		// para início de cálculo, a taxa deve ser contrária à relevência de uma análise
-		double taxaRelevante = comparador.relevante(1.0, 2.0) ? -1.0 : 1.0;
+		double taxaRelevante = comparador.valorInicial();
 		String nomeFilial = list.get(0).getFilial();
 		
 		// Cálculo baseado em valores inicial e final, interpretado como forma de porcentagem

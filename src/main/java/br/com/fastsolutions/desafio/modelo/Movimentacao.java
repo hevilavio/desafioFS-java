@@ -3,6 +3,10 @@ package br.com.fastsolutions.desafio.modelo;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Apenas um POJO
+ * 
+ * */
 public class Movimentacao {
 
 	private String filial;

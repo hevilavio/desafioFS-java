@@ -38,4 +38,16 @@ public class GeradorDeMovimentacoes {
 		}
 		return movimentacoes;
 	}
+
+	/**
+	 * Apenas lista com valores default<br/>
+	 * <b>Maior venda:</b> RS
+	 * <b>Menor venda:</b>RJ
+	 * 
+	 * */
+	public static List<Movimentacao> gerarListaComNomesDeFilial() {
+		String[] filiais = new String[]{ "SP", "RJ", "RS", "SP", "RJ", "RS" };
+		double[] valores = new double[]{ 10.0, 20.0, 30.0, 50.0, 20.0, 40.0 };
+		return gerarListaComNomesDeFilial(filiais, valores);
+	}
 }
