@@ -14,7 +14,7 @@ import br.com.fastsolutions.desafio.modelo.Movimentacao;
 public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 
 	private final Comparador<Double, Double> comparador;
-	private final Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupadorFilial;
+	private final Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupadorPorChave;
 	private final Agrupador<Movimentacao, Map<String,List<Movimentacao>>> agrupadorPorValor;
 	private final ChaveAgrupamento<Movimentacao, String> chaveAgrupamento;
 	
@@ -27,7 +27,7 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 	public IndicadorVendaFilial(Comparador<Double, Double> comparador, ChaveAgrupamento<Movimentacao, String> chave) {
 		
 		this.comparador = comparador;
-		this.agrupadorFilial = new AgrupadorPorChave(chave);
+		this.agrupadorPorChave = new AgrupadorPorChave(chave);
 		this.agrupadorPorValor = new AgrupadorPorValorTotal();
 		this.chaveAgrupamento = chave;
 	}
@@ -38,11 +38,11 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 		double atual = comparador.valorInicial();
 		TreeMap<String, List<Movimentacao>> agrupamentoValor;
 		
-		// Agrupamos por nome de Filial
-		Map<String,List<Movimentacao>> agrupamentoFilial = agrupadorFilial.agrupa(list);
-		for(Map.Entry<String,List<Movimentacao>> entry : agrupamentoFilial.entrySet())
+		// Agrupamos por chave (Filial ou mes)
+		Map<String,List<Movimentacao>> agrupamentoChave = agrupadorPorChave.agrupa(list);
+		for(Map.Entry<String,List<Movimentacao>> entry : agrupamentoChave.entrySet())
 		{
-			// agrupamos todos os valores de uma Filial
+			// agrupamos os valores do agrupamento anterior
 			agrupamentoValor = (TreeMap<String, List<Movimentacao>>)
 					agrupadorPorValor.agrupa(entry.getValue());
 

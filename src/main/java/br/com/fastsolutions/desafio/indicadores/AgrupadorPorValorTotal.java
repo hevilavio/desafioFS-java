@@ -17,26 +17,13 @@ import br.com.fastsolutions.desafio.modelo.MovimentacaoBuilder;
  * 
  * */
 public class AgrupadorPorValorTotal implements Agrupador<Movimentacao, Map<String, List<Movimentacao>>> {
- 
-	private ChaveAgrupamento<Movimentacao, String> chaveAgrupamento;
 
-	public AgrupadorPorValorTotal(){
-		this.chaveAgrupamento = new ChaveAgrupamento<Movimentacao, String>() {
-			
-			@Override
-			public String getChave(Movimentacao item) {
-				return item.getFilial();
-			}
-		};
-	}
-	public AgrupadorPorValorTotal(ChaveAgrupamento<Movimentacao, String> chave) {
-		this.chaveAgrupamento = chave;
-	}
-	
 	@Override
 	public Map<String, List<Movimentacao>> agrupa(List<Movimentacao> list) {
 		double total = 0.0;
-		String chave = chaveAgrupamento.getChave(list.get(0));
+		String filial = list.get(0).getFilial();
+		String mes = list.get(0).getMes();
+		
 		
 		Map<String, List<Movimentacao>> agrupamento = new TreeMap<>();
 		Iterator<Movimentacao> iterator = list.iterator();
@@ -47,15 +34,15 @@ public class AgrupadorPorValorTotal implements Agrupador<Movimentacao, Map<Strin
 		}
 
 		Movimentacao movimentacaoTotal = new MovimentacaoBuilder()
-				.comFilial(chave).comMes(chaveAgrupamento.getChave(list.get(0))).comValor(total)
+				.comFilial(filial).comMes(mes).comValor(total)
 				.gerarMovimentacao();
  
-		agrupamento.put(chave, movimentacaoTotal.toList());
+		agrupamento.put(filial, movimentacaoTotal.toList());
 		return agrupamento;
 	}
 
 	@Override
 	public ChaveAgrupamento<Movimentacao, String> getChave() {
-		return chaveAgrupamento;
+		throw new IllegalStateException("Nao implementado, apenas por obrigação da interface");
 	}
 }

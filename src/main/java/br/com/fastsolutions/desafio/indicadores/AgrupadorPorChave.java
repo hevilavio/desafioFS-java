@@ -32,7 +32,7 @@ public class AgrupadorPorChave implements Agrupador<Movimentacao, Map<String, Li
 		
 		Iterator<Movimentacao> iterator = list.iterator();
 		while(iterator.hasNext()){
-			Movimentacao movimentacao = iterator.next();
+			Movimentacao movimentacao = iterator.next(); 
 			chave = chaveAgrupamento.getChave(movimentacao);
 			
 			if(agrupamento.containsKey(chave)){
