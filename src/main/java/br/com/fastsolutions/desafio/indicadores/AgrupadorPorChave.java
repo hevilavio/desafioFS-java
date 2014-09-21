@@ -45,6 +45,11 @@ public class AgrupadorPorChave implements Agrupador<Movimentacao, Map<String, Li
 		}
 		return agrupamento;
 	}
- 
+
+	@Override
+	public ChaveAgrupamento<Movimentacao, String> getChave() {
+		return chaveAgrupamento;
+	}
+
 
 }

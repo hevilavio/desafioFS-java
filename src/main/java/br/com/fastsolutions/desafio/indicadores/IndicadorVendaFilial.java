@@ -16,31 +16,25 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 	private final Comparador<Double, Double> comparador;
 	private final Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupadorFilial;
 	private final Agrupador<Movimentacao, Map<String,List<Movimentacao>>> agrupadorPorValor;
-
+	private final ChaveAgrupamento<Movimentacao, String> chaveAgrupamento;
+	
 	/**
 	 * @param comparador
 	 *            Estratégia de comparação para a relevância do indicador <br/>
 	 * O agrupamento é feito por <b>Filial</b>
 	 *            
 	 */
-	public IndicadorVendaFilial(Comparador<Double, Double> comparador) {
-		
-		ChaveAgrupamento<Movimentacao, String> chave = new ChaveAgrupamento<Movimentacao, String>() {
-			
-			@Override
-			public String getChave(Movimentacao item) {
-				return item.getFilial();
-			}
-		};
+	public IndicadorVendaFilial(Comparador<Double, Double> comparador, ChaveAgrupamento<Movimentacao, String> chave) {
 		
 		this.comparador = comparador;
 		this.agrupadorFilial = new AgrupadorPorChave(chave);
 		this.agrupadorPorValor = new AgrupadorPorValorTotal();
+		this.chaveAgrupamento = chave;
 	}
 
 	@Override
 	public String calcula(List<Movimentacao> list) {
-		String nomeEmpresa = null;
+		String chave = null;
 		double atual = comparador.valorInicial();
 		TreeMap<String, List<Movimentacao>> agrupamentoValor;
 		
@@ -55,10 +49,10 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 			Movimentacao nova = agrupamentoValor.firstEntry().getValue().get(0);
 			if(comparador.relevante(atual, nova.getValor())){
 				atual = nova.getValor();
-				nomeEmpresa = nova.getFilial();
+				chave = chaveAgrupamento.getChave(nova);
 			}
 			
 		}
-		return nomeEmpresa;
+		return chave;
 	}
 }

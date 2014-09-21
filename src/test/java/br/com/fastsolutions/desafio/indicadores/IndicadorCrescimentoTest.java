@@ -57,4 +57,16 @@ public class IndicadorCrescimentoTest {
 		
 		assertEquals("RJ", nomeFilial);
 	}
+//	
+//	@Test
+//	public void possoCalcularMaiorCrescimentoMes(){
+//		
+//		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
+//		this.indicador = factory.indicadorPorMesVendaPositivo();
+//		String mes = indicador.calcula(movimentacoes);
+//		
+//		assertEquals("e5", mes);
+//	}
+	
+	
 }

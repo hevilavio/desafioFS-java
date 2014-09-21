@@ -1,24 +1,21 @@
 package br.com.fastsolutions.desafio.console;
 
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 import br.com.fastsolutions.desafio.modelo.Movimentacao;
 import br.com.fastsolutions.desafio.reader.Leitor;
 import br.com.fastsolutions.desafio.reader.LeitorTXT;
 
 public class AnalisadorMovimentacoes {
-	private DataInputStream teclado;
+	private Scanner teclado;
 	private Leitor<Movimentacao> leitor;
 
 	public AnalisadorMovimentacoes() {
-		this.teclado = new DataInputStream(System.in);
+		this.teclado = new Scanner(System.in);
 		this.leitor = new LeitorTXT();
 	}
 
@@ -29,30 +26,22 @@ public class AnalisadorMovimentacoes {
 		try {
 			while(loop){
 				
-				String caminho = teclado.readUTF();
-				caminho = "file:///".concat(caminho); // ajuste do java.nio para Windows
+				String caminho = teclado.nextLine();
+				caminho = "file:///".concat(caminho).replace("\\", "/"); // ajuste do java.nio para Windows
 				Path arquivo = Paths.get(new URI(caminho));
 				
-				if (Files.exists(arquivo, LinkOption.NOFOLLOW_LINKS)) {
-					throw new IllegalArgumentException(
-							"Caminho inválido.Caminho: " + caminho);
-				}
+				 
 				List<Movimentacao> movimentacoes = leitor.getList(arquivo);
 
-				new PainelIndicadores().exibir(movimentacoes);
+				new PainelIndicadores().calcularEExibir(movimentacoes);
 
-				System.out.println("Executar novamente?[S/N]");
-				loop = teclado.readUTF().toLowerCase() == "s";
+				System.out.println("\nExecutar novamente?[S/N]");
+				loop = teclado.nextLine().toLowerCase() == "s";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				teclado.close();
-			} catch (IOException e) {
-				System.err.println("Erro ao liberar teclado como entrada");
-				e.printStackTrace();
-			}
+			teclado.close();
 		}
 	}
 }

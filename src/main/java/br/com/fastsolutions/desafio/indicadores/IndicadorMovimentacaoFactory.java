@@ -5,18 +5,18 @@ import br.com.fastsolutions.desafio.modelo.Movimentacao;
 
 public class IndicadorMovimentacaoFactory {
 	
-	private ChaveAgrupamento<Movimentacao, String> chaveFilial;
+	private ChaveAgrupamento<Movimentacao, String> chaveFilial; 
 
 	public IndicadorMovimentacaoFactory() {
-this.chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
-			
+		this.chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
+
 			@Override
 			public String getChave(Movimentacao item) {
 				return item.getFilial();
 			}
-		};
+		}; 
 	}
-	
+			
 	
 	public IndicadorCrescimento indicadorPorFilialPositivo(){
 		Comparador<Double, Double> comparador = new Comparador<Double, Double>() {
@@ -51,7 +51,7 @@ this.chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
 	}
 
 
-	public IndicadorCrescimento indicadorPorVendaPositivo(){
+	public IndicadorCrescimento indicadorPorMesVendaPositivo(){
 		Comparador<Double, Double> comparador = new Comparador<Double, Double>() {
 			@Override
 			public boolean relevante(Double atual, Double novo) {
@@ -63,7 +63,39 @@ this.chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
 				return Double.MIN_VALUE;
 			}
 		};
-		
-		return new IndicadorCrescimento(new AgrupadorPorChave(chaveFilial), comparador);
+		ChaveAgrupamento<Movimentacao, String> chaveMes = new ChaveAgrupamento<Movimentacao, String>() {
+
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getMes();
+			}
+		}; 
+
+		return new IndicadorCrescimento(new AgrupadorPorChave(chaveMes), comparador);
+	}
+
+
+	public Indicador<Movimentacao, String> indicadorMesMaiorVenda() {
+		Comparador<Double, Double> comparador = new Comparador<Double, Double>() {
+			@Override
+			public boolean relevante(Double atual, Double novo) {
+				return atual < novo;
+			}
+
+			@Override
+			public Double valorInicial() {
+				return Double.MIN_VALUE;
+			}
+		};
+		ChaveAgrupamento<Movimentacao, String> chave = new ChaveAgrupamento<Movimentacao, String>() {
+			
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getMes();
+			}
+		};
+		return new IndicadorVendaFilial(comparador, chave);
+		//return new IndicadorCrescimento(new AgrupadorPorValorTotal(chave), comparador);
+
 	}
 }

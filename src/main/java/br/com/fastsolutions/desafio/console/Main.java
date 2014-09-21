@@ -12,7 +12,6 @@ public class Main {
 
 	private static void init() {
 		System.out.println("Desafio FAST SOLUTIONS");
-		System.out.println("@hevilavio");
-		System.out.println("\n\n");
+		System.out.println("@hevilavio\n");
 	}
 }

@@ -14,20 +14,28 @@ public class AgrupadorPorChaveTest {
 	
 	private List<Movimentacao> movimentacoes;
 	private Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupador;
+	private Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupadorMes;
 	
 	private final String[] filiais = new String[]{ "SP", "RJ", "RS", "SP", "RJ", "RS" };
 	private final double[] valores = new double[]{ 10.0, 20.0, 30.0, 20.0, 40.0, 60.0 };
 	
 	@Before
 	public void init(){
-		ChaveAgrupamento<Movimentacao, String> chave = new ChaveAgrupamento<Movimentacao, String>() {
+		ChaveAgrupamento<Movimentacao, String> chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
 			@Override
 			public String getChave(Movimentacao item) {
 				return item.getFilial();
 			}
 		};
-		
-		agrupador = new AgrupadorPorChave(chave);
+		ChaveAgrupamento<Movimentacao, String> chaveMes = new ChaveAgrupamento<Movimentacao, String>() {
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getMes();
+			}
+		};
+
+		agrupador = new AgrupadorPorChave(chaveFilial);
+		agrupadorMes = new AgrupadorPorChave(chaveMes);
 		movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
 	}
 	
@@ -92,5 +100,27 @@ public class AgrupadorPorChaveTest {
 		assertEquals(1, agrupamento.get("RS").size());
 		assertEquals(30.0, agrupamento.get("RS").get(0).getValor(), 0.00001);
 	}
+	
+	@Test
+	public void possoAgruparPorMes() {
+		String[] filiais = new String[]{ "SP", "RJ", "RS", "RJ", "SP" };
+		double[] valores = new double[]{ 10.0, 20.0, 30.0, 40.0, 50.0 };
+		
+		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
+		Map<String, List<Movimentacao>> agrupamento = agrupadorMes.agrupa(movimentacoes);
+
+		assertEquals(5, agrupamento.size());  
+	}
+	@Test
+	public void possoCalcularMaiorVendaAgrupamentoMes() {
+		String[] filiais = new String[]{ "SP", "RJ", "RS", "RJ", "SP" };
+		double[] valores = new double[]{ 10.0, 20.0, 30.0, 40.0, 50.0 };
+		
+		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
+		Map<String, List<Movimentacao>> agrupamento = agrupadorMes.agrupa(movimentacoes);
+
+		assertEquals(5, agrupamento.size());  
+	}
+	
 
 }

@@ -15,6 +15,7 @@ import java.util.Map;
  * */
 public interface Agrupador<T, R extends Map<?, ?>>{
 	public R agrupa(List<T> list);
+	public ChaveAgrupamento<T, String> getChave();
 }
 
 

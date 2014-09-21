@@ -17,7 +17,7 @@ public class IndicadorCrescimento implements Indicador<Movimentacao, String>{
 	
 	private final Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupador;
 	private final Comparador<Double, Double> comparador;
-
+	
 	/**
 	 * 
 	 * @param agrupador A estratégia de agrupamento da lista Movimentacao
@@ -36,7 +36,7 @@ public class IndicadorCrescimento implements Indicador<Movimentacao, String>{
 		Map<String,List<Movimentacao>> agrupamento = agrupador.agrupa(list);
 
 		double taxaRelevante = comparador.valorInicial();
-		String nomeFilial = list.get(0).getFilial();
+		String chave = agrupador.getChave().getChave(list.get(0));
 		
 		// Cálculo baseado em valores inicial e final, interpretado como forma de porcentagem
 		for(Map.Entry<String,List<Movimentacao>> entry : agrupamento.entrySet())
@@ -49,11 +49,11 @@ public class IndicadorCrescimento implements Indicador<Movimentacao, String>{
 			
 			if(comparador.relevante(taxaRelevante, taxa)){
 				taxaRelevante = taxa;
-				nomeFilial = entry.getValue().get(0).getFilial();
+				chave = agrupador.getChave().getChave(entry.getValue().get(0));
 			}
 		}
 		
-		return nomeFilial;
+		return chave;
 	}
 
 }

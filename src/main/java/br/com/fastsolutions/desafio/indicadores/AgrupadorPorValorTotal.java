@@ -17,11 +17,26 @@ import br.com.fastsolutions.desafio.modelo.MovimentacaoBuilder;
  * 
  * */
 public class AgrupadorPorValorTotal implements Agrupador<Movimentacao, Map<String, List<Movimentacao>>> {
+ 
+	private ChaveAgrupamento<Movimentacao, String> chaveAgrupamento;
 
+	public AgrupadorPorValorTotal(){
+		this.chaveAgrupamento = new ChaveAgrupamento<Movimentacao, String>() {
+			
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getFilial();
+			}
+		};
+	}
+	public AgrupadorPorValorTotal(ChaveAgrupamento<Movimentacao, String> chave) {
+		this.chaveAgrupamento = chave;
+	}
+	
 	@Override
 	public Map<String, List<Movimentacao>> agrupa(List<Movimentacao> list) {
 		double total = 0.0;
-		String nomeFilial = list.get(0).getFilial();
+		String chave = chaveAgrupamento.getChave(list.get(0));
 		
 		Map<String, List<Movimentacao>> agrupamento = new TreeMap<>();
 		Iterator<Movimentacao> iterator = list.iterator();
@@ -32,10 +47,15 @@ public class AgrupadorPorValorTotal implements Agrupador<Movimentacao, Map<Strin
 		}
 
 		Movimentacao movimentacaoTotal = new MovimentacaoBuilder()
-				.comFilial(nomeFilial).comMes("AGRUPAMENTO").comValor(total)
+				.comFilial(chave).comMes(chaveAgrupamento.getChave(list.get(0))).comValor(total)
 				.gerarMovimentacao();
  
-		agrupamento.put(nomeFilial, movimentacaoTotal.toList());
+		agrupamento.put(chave, movimentacaoTotal.toList());
 		return agrupamento;
+	}
+
+	@Override
+	public ChaveAgrupamento<Movimentacao, String> getChave() {
+		return chaveAgrupamento;
 	}
 }

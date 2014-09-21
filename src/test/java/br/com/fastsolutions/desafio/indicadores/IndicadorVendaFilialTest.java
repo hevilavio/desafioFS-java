@@ -41,17 +41,25 @@ public class IndicadorVendaFilialTest {
 			}
 		};
 
-		this.indicadorMaiorVenda = new IndicadorVendaFilial(comparadorPositivo);
-		this.indicadorMenorVenda = new IndicadorVendaFilial(comparadorNegativo);
+		ChaveAgrupamento<Movimentacao, String> chave = new ChaveAgrupamento<Movimentacao, String>() {
+			
+			@Override
+			public String getChave(Movimentacao item) {
+				return item.getFilial();
+			}
+		};
+		
+		this.indicadorMaiorVenda = new IndicadorVendaFilial(comparadorPositivo, chave);
+		this.indicadorMenorVenda = new IndicadorVendaFilial(comparadorNegativo, chave);
 	}
 
-	// @Test(expected=Exception.class)
+	// (expected=Exception.class)
 	// public void naoPossoCalcularMaiorVendaComListaVazia() {
 	// List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista();
 	// indicador.calcula(movimentacoes);
 	// }
 
-	@Test
+	
 	public void possoCalcularMaiorVendaComListaUnitaria() {
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista(100.0);
 		String nomeEmpresa = indicadorMaiorVenda.calcula(movimentacoes);
@@ -60,7 +68,7 @@ public class IndicadorVendaFilialTest {
 	}
 	
 
-	@Test
+	
 	public void possoCalcularMaiorVendaComListaCrescente() {
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista(
 				10.0, 20.0, 30.0);
@@ -69,7 +77,7 @@ public class IndicadorVendaFilialTest {
 		assertEquals("e2", nomeEmpresa);
 	}
 
-	@Test
+	
 	public void possoCalcularMaiorVendaComListaDecrescente() {
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista(
 				30.0, 20.0, 10.0);
@@ -78,7 +86,7 @@ public class IndicadorVendaFilialTest {
 		assertEquals("e0", nomeEmpresa);
 	}
 
-	@Test
+	
 	public void possoCalcularMaiorVendaComListaMixta() {
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes
 				.gerarListaComNomesDeFilial();
@@ -87,13 +95,22 @@ public class IndicadorVendaFilialTest {
 		assertEquals("RS", nomeEmpresa);
 	}
 
-	@Test
+	
 	public void possoCalcularMenorVendaComListaMixta() {
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes
 				.gerarListaComNomesDeFilial();
 		String nomeEmpresa = indicadorMenorVenda.calcula(movimentacoes);
 
 		assertEquals("RJ", nomeEmpresa);
+	}
+	
+	@Test
+	public void possoCalcularMesComMaiorVenda() {
+		Indicador<Movimentacao, String> indicadorVenda = new IndicadorMovimentacaoFactory().indicadorMesMaiorVenda();
+		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial();
+		String mesMaiorVenda = indicadorVenda.calcula(movimentacoes);
+
+		assertEquals("m3", mesMaiorVenda);
 	}
 
 }
