@@ -32,8 +32,10 @@ public class AnalisadorMovimentacoes {
 				
 				List<Movimentacao> movimentacoes = leitor.getList(arquivo);
 
-				new PainelIndicadores().calcularEExibir(movimentacoes);
-
+				PainelIndicadores painel = new PainelIndicadores();
+				painel.calcular(movimentacoes);
+				painel.imprimirConsole();
+				
 				System.out.println("\nExecutar novamente?[S/N]");
 				loop = teclado.nextLine().toLowerCase().equals("s");
 			}

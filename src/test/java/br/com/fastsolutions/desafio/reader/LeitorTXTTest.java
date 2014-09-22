@@ -1,7 +1,10 @@
 package br.com.fastsolutions.desafio.reader;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.text.NumberFormat;
@@ -54,4 +57,17 @@ public class LeitorTXTTest {
 	public void naoPodeLerTxtInvalido() throws Exception {
 		reader.getList(Paths.get(new URI(caminhoTxtInvalido)));
 	}
+	
+	
+	public void possoLerDeStream() throws Exception{
+		FileInputStream stream = new FileInputStream(new File(caminhoTxt));
+		List<Movimentacao> movimentacoes = reader.getList(stream);
+		
+		assertEquals("São Paulo", movimentacoes.get(0).getFilial());
+		assertEquals("Janeiro", movimentacoes.get(0).getMes());
+		assertEquals(14558.0 , movimentacoes.get(0).getValor(), 0.00001);
+		
+		stream.close();
+	}
+	
 }

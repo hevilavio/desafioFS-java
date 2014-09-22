@@ -12,16 +12,11 @@
 	<h2>Desafio FAST SOLUTIONS</h2>
 	<h5>@hevilavio</h5>
 
-	<h:form id="formulario" enctype="multipart/form-data">
-		<p:growl id="messages" showDetail="true" />
-		<p:fileUpload fileUploadListener="#{desafioBean.arquivo}" mode="simple" />
-
-		<h:outputLabel value="Filial que mais vendeu:" />
-		<h:outputLabel value="#{desafioBean.filialMaiorVenda}"/>
-		
-		<br/>
-		<p:commandButton value="Calcular" action="#{desafioBean.calcular}"
-			update=":formulario"/>
+	<h:form id="formulario" enctype="multipart/form-data"> 
+	
+		<p:fileUpload fileUploadListener="#{desafioBean.uploadArquivo}" label="Selecione o arquivo" auto="true"/>
+		<p:messages  severity="info" escape="false" showDetail="true" 
+                 autoUpdate="true" closable="true"/>
 	</h:form>
 </h:body>
 </html>
