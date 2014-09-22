@@ -24,7 +24,7 @@ public class GeradorDeMovimentacoes {
 	}
 	
 	/**
-	 * Gera lista com a respectiva ordem de filial>valor.
+	 * Gera lista com a respectiva ordem de filial->valor.
 	 * 
 	 * */
 	public static List<Movimentacao> gerarListaComNomesDeFilial(String[] filiais, double[] valores){

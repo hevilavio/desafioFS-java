@@ -11,7 +11,7 @@ import br.com.fastsolutions.desafio.modelo.Movimentacao;
  * regra de comparação.
  * 
  * */
-public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
+public class IndicadorVenda implements Indicador<Movimentacao, String> {
 
 	private final Comparador<Double, Double> comparador;
 	private final Agrupador<Movimentacao, Map<String, List<Movimentacao>>> agrupadorPorChave;
@@ -24,7 +24,7 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 	 * O agrupamento é feito por <b>Filial</b>
 	 *            
 	 */
-	public IndicadorVendaFilial(Comparador<Double, Double> comparador, ChaveAgrupamento<Movimentacao, String> chave) {
+	public IndicadorVenda(ChaveAgrupamento<Movimentacao, String> chave, Comparador<Double, Double> comparador) {
 		
 		this.comparador = comparador;
 		this.agrupadorPorChave = new AgrupadorPorChave(chave);
@@ -38,7 +38,7 @@ public class IndicadorVendaFilial implements Indicador<Movimentacao, String> {
 		double atual = comparador.valorInicial();
 		TreeMap<String, List<Movimentacao>> agrupamentoValor;
 		
-		// Agrupamos por chave (Filial ou mes)
+		// Agrupamos por chave (filial ou mes)
 		Map<String,List<Movimentacao>> agrupamentoChave = agrupadorPorChave.agrupa(list);
 		for(Map.Entry<String,List<Movimentacao>> entry : agrupamentoChave.entrySet())
 		{

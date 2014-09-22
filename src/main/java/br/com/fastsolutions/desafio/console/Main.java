@@ -3,6 +3,9 @@ package br.com.fastsolutions.desafio.console;
 public class Main {
 
 	/**
+	 * Apenas um target para possibilidade de exportar a aplicação
+	 * como Console Application.
+	 * 
 	 * @param args Não espera nenhum parâmetro
 	 */
 	public static void main(String[] args) {

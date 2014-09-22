@@ -10,7 +10,7 @@ import br.com.fastsolutions.desafio.modelo.MovimentacaoBuilder;
 
 /**
  * Realiza o agrupamento de uma lista de movimentações
- * em um TreeMap com uma única movimentação (soma
+ * em um <b>TreeMap</b> com uma única movimentação (soma
  * de todos os elementos da lista).
  * 
  * @author Hevilávio
@@ -23,7 +23,6 @@ public class AgrupadorPorValorTotal implements Agrupador<Movimentacao, Map<Strin
 		double total = 0.0;
 		String filial = list.get(0).getFilial();
 		String mes = list.get(0).getMes();
-		
 		
 		Map<String, List<Movimentacao>> agrupamento = new TreeMap<>();
 		Iterator<Movimentacao> iterator = list.iterator();

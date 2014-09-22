@@ -21,22 +21,21 @@ public class AnalisadorMovimentacoes {
 
 	public void iniciar() {
 		boolean loop = true;
-		System.out.println("Informe o caminho do arquivo:\n");
 
 		try {
 			while(loop){
+				System.out.println("Informe o caminho do arquivo:\n");
 				
 				String caminho = teclado.nextLine();
 				caminho = "file:///".concat(caminho).replace("\\", "/"); // ajuste do java.nio para Windows
 				Path arquivo = Paths.get(new URI(caminho));
 				
-				 
 				List<Movimentacao> movimentacoes = leitor.getList(arquivo);
 
 				new PainelIndicadores().calcularEExibir(movimentacoes);
 
 				System.out.println("\nExecutar novamente?[S/N]");
-				loop = teclado.nextLine().toLowerCase() == "s";
+				loop = teclado.nextLine().toLowerCase().equals("s");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

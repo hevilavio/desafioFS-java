@@ -7,27 +7,29 @@ import br.com.fastsolutions.desafio.indicadores.IndicadorMovimentacaoFactory;
 import br.com.fastsolutions.desafio.modelo.Movimentacao;
 
 public class PainelIndicadores {
-	private Indicador<Movimentacao, ?> indicadorPositivoVenda;
-	private Indicador<Movimentacao, ?> indicadorCrescimento;
-	private Indicador<Movimentacao, ?> indicadorQueda;
-	private Indicador<Movimentacao, ?> indicadorMesMaiorVenda;
+	private Indicador<Movimentacao, ?> indVendaPositivoFilial;
+	private Indicador<Movimentacao, ?> indCrescimentoFilialPositivo;
+	private Indicador<Movimentacao, ?> indCrescimentoFilialNegativo;
+	private Indicador<Movimentacao, ?> indCrescimentoMesPositivo;
 
+	
+	
 	public PainelIndicadores() { 
 		IndicadorMovimentacaoFactory indicadorFactory = new IndicadorMovimentacaoFactory();
 
-		indicadorPositivoVenda = indicadorFactory.indicadorMesMaiorVenda();		
-		indicadorCrescimento = indicadorFactory.indicadorPorFilialPositivo();
-		indicadorQueda = indicadorFactory.indicadorPorFilialNegativo();
-		indicadorMesMaiorVenda = indicadorFactory.indicadorPorMesVendaPositivo();
+		indVendaPositivoFilial = indicadorFactory.indicadorVendaFilialPositivo();		
+		indCrescimentoFilialPositivo = indicadorFactory.indicadorCrescimentoFilialPositivo();
+		indCrescimentoFilialNegativo = indicadorFactory.indicadorCrescimentoFilialNegativo();
+		indCrescimentoMesPositivo = indicadorFactory.indicadorCrescimentoMesPositivo();
 	}
 
 	public void calcularEExibir(List<Movimentacao> movimentacoes) {
 
-		System.out.println("\n ==RESULTADOS== \n\n");
+		System.out.println("\n ==RESULTADOS== \n");
 
-		System.out.println("Filial que mais vendeu: " + indicadorPositivoVenda.calcula(movimentacoes));
-		System.out.println("Filial com maior crescimento: " + indicadorCrescimento.calcula(movimentacoes));
-		System.out.println("Filial com maior queda: " + indicadorQueda.calcula(movimentacoes));
-		System.out.println("Mês que a empresa mais vendeu: " + indicadorMesMaiorVenda.calcula(movimentacoes));
+		System.out.println("Filial que mais vendeu: " + indVendaPositivoFilial.calcula(movimentacoes));
+		System.out.println("Filial com maior crescimento: " + indCrescimentoFilialPositivo.calcula(movimentacoes));
+		System.out.println("Filial com maior queda: " + indCrescimentoFilialNegativo.calcula(movimentacoes));
+		System.out.println("Mês que a empresa mais vendeu: " + indCrescimentoMesPositivo.calcula(movimentacoes));
 	}
 }

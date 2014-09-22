@@ -20,22 +20,9 @@ public class AgrupadorPorChaveTest {
 	private final double[] valores = new double[]{ 10.0, 20.0, 30.0, 20.0, 40.0, 60.0 };
 	
 	@Before
-	public void init(){
-		ChaveAgrupamento<Movimentacao, String> chaveFilial = new ChaveAgrupamento<Movimentacao, String>() {
-			@Override
-			public String getChave(Movimentacao item) {
-				return item.getFilial();
-			}
-		};
-		ChaveAgrupamento<Movimentacao, String> chaveMes = new ChaveAgrupamento<Movimentacao, String>() {
-			@Override
-			public String getChave(Movimentacao item) {
-				return item.getMes();
-			}
-		};
-
-		agrupador = new AgrupadorPorChave(chaveFilial);
-		agrupadorMes = new AgrupadorPorChave(chaveMes);
+	public void init(){ 
+		agrupador = new AgrupadorPorChave(new ChaveAgrupamentoFilial());
+		agrupadorMes = new AgrupadorPorChave(new ChaveAgrupamentoMes());
 		movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
 	}
 	

@@ -25,7 +25,7 @@ public class IndicadorCrescimentoTest {
 	@Test
 	public void possoCalcularCrescimentoPositivoComUmaMovimentacao(){
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista(100.0);
-		this.indicador = factory.indicadorPorFilialPositivo();
+		this.indicador = factory.indicadorCrescimentoFilialPositivo();
 		String nomeFilial = indicador.calcula(movimentacoes);
 		
 		assertEquals("e0", nomeFilial);
@@ -33,7 +33,7 @@ public class IndicadorCrescimentoTest {
 	@Test
 	public void possoCalcularCrescimentoNegativoComUmaMovimentacao(){
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarLista(100.0);
-		this.indicador = factory.indicadorPorFilialNegativo();
+		this.indicador = factory.indicadorCrescimentoFilialNegativo();
 		String nomeFilial = indicador.calcula(movimentacoes);
 		
 		assertEquals("e0", nomeFilial);
@@ -43,7 +43,7 @@ public class IndicadorCrescimentoTest {
 	public void possoCalcularCrescimentoPositivoComMaisDeUmaMovimentacao(){
 		
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
-		this.indicador = factory.indicadorPorFilialPositivo();
+		this.indicador = factory.indicadorCrescimentoFilialPositivo();
 		String nomeFilial = indicador.calcula(movimentacoes);
 		
 		assertEquals("SP", nomeFilial);
@@ -52,21 +52,21 @@ public class IndicadorCrescimentoTest {
 	public void possoCalcularCrescimentoNegativoComMaisDeUmaMovimentacao(){
 		
 		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
-		this.indicador = factory.indicadorPorFilialNegativo();
+		this.indicador = factory.indicadorCrescimentoFilialNegativo();
 		String nomeFilial = indicador.calcula(movimentacoes);
 		
 		assertEquals("RJ", nomeFilial);
 	}
-//	
-//	@Test
-//	public void possoCalcularMaiorCrescimentoMes(){
-//		
-//		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
-//		this.indicador = factory.indicadorPorMesVendaPositivo();
-//		String mes = indicador.calcula(movimentacoes);
-//		
-//		assertEquals("e5", mes);
-//	}
+	
+	@Test
+	public void possoCalcularMaiorCrescimentoMes(){
+		
+		List<Movimentacao> movimentacoes = GeradorDeMovimentacoes.gerarListaComNomesDeFilial(filiais, valores);
+		this.indicador = factory.indicadorCrescimentoMesPositivo();
+		String mes = indicador.calcula(movimentacoes);
+		
+		assertEquals("m0", mes);
+	}
 	
 	
 }
