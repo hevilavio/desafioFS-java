@@ -25,6 +25,7 @@ public class AnalisadorMovimentacoes {
 		try {
 			while(loop){
 				System.out.println("Informe o caminho do arquivo:\n");
+				System.out.println("Exemplo:\n\t c:\\res\\movimentacoes.txt\n");
 				
 				String caminho = teclado.nextLine();
 				caminho = "file:///".concat(caminho).replace("\\", "/"); // ajuste do java.nio para Windows
@@ -34,7 +35,10 @@ public class AnalisadorMovimentacoes {
 
 				PainelIndicadores painel = new PainelIndicadores();
 				painel.calcular(movimentacoes);
-				painel.imprimirConsole();
+				String resultado = painel.getStringConsole();
+				
+				System.out.println("\n==RESULTADO==\n");
+				System.out.println(resultado);
 				
 				System.out.println("\nExecutar novamente?[S/N]");
 				loop = teclado.nextLine().toLowerCase().equals("s");

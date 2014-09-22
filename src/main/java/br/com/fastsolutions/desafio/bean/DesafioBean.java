@@ -28,7 +28,7 @@ public class DesafioBean {
 			painel.calcular(movimentacoes);
 			
 			resposta.setSummary("RESULTADO:<br>");
-			resposta.setDetail(painel.getResultadoHtml());
+			resposta.setDetail(painel.getStringHtml());
 			
 		} catch (Exception e) {
 			resposta.setSummary("ERRO:");
