@@ -30,6 +30,6 @@ public class PainelIndicadores {
 		System.out.println("Filial que mais vendeu: " + indVendaPositivoFilial.calcula(movimentacoes));
 		System.out.println("Filial com maior crescimento: " + indCrescimentoFilialPositivo.calcula(movimentacoes));
 		System.out.println("Filial com maior queda: " + indCrescimentoFilialNegativo.calcula(movimentacoes));
-		System.out.println("Mês que a empresa mais vendeu: " + indCrescimentoMesPositivo.calcula(movimentacoes));
+		System.out.println("Mes que a empresa mais vendeu: " + indCrescimentoMesPositivo.calcula(movimentacoes));
 	}
 }
